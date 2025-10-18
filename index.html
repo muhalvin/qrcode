@@ -8,11 +8,7 @@
 	<script src="qrcode.min.js"></script>
 
 	<style>
-		* {
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-		}
+		* { margin: 0; padding: 0; box-sizing: border-box; }
 
 		body {
 			font-family: Arial, sans-serif;
@@ -40,15 +36,28 @@
 			max-height: 100%;
 		}
 
-		input[type="number"],
-		input[type="color"] {
-			width: 5em;
+		.download-buttons {
+			margin: 1em 0;
 		}
 
-		input[type="number"] {
-			padding: 0.25em;
-			text-align: right;
+		.download-buttons button {
+			background: #0ae;
+			color: #fff;
+			border: none;
+			padding: 0.7em 1.2em;
+			cursor: pointer;
+			font-size: 13px;
+			border-radius: 4px;
+			margin: 0 0.3em;
+			transition: background 0.2s ease;
 		}
+
+		.download-buttons button:hover {
+			background: #09c;
+		}
+
+		input[type="number"], input[type="color"] { width: 5em; }
+		input[type="number"] { padding: 0.25em; text-align: right; }
 
 		select {
 			width: 9em;
@@ -56,9 +65,7 @@
 			padding: 0.25em 0.2em;
 		}
 
-		option {
-			padding: 0.25em 0.2em;
-		}
+		option { padding: 0.25em 0.2em; }
 
 		textarea {
 			resize: none;
@@ -71,212 +78,64 @@
 			text-align: center;
 		}
 
-		#set {
-			background: #fff;
-			user-select: none;
-			overflow: hidden;
-		}
+		#set { background: #fff; user-select: none; overflow: hidden; }
+		#set table { border-collapse: collapse; margin: 2em auto; font-size: 11px; text-transform: uppercase; }
+		#set th, #set td { padding: 0.4em 0.5em; }
+		#set th { text-align: right; color: #567; }
+		#set td { text-align: left; }
 
-		#set table {
-			border-collapse: collapse;
-			margin: 2em auto;
-			font-size: 11px;
-			text-transform: uppercase;
-		}
+		.opt { display: block; padding: 1em; color: #fff; text-decoration: none; }
+		#op1.opt { background: #0ae; }
+		#op1.opt:hover { background: #0af; }
+		#op2.opt { background: #ea0; }
+		#op2.opt:hover { background: #fa0; }
 
-		#set th,
-		#set td {
-			padding: 0.4em 0.5em;
-		}
+		#set table, #set .legend, #set #op2.opt, #set.show #op1.opt { display: none; }
+		#set.show table { display: table; }
+		#set.show #op2.opt { display: block; }
 
-		#set th {
-			text-align: right;
-			color: #567;
-		}
-
-		#set td {
-			text-align: left;
-		}
-
-		.opt {
-			display: block;
-			padding: 1em;
-			color: #fff;
-			text-decoration: none;
-		}
-
-		#op1.opt {
-			background: #0ae;
-		}
-
-		#op1.opt:hover {
-			background: #0af;
-		}
-
-		#op2.opt {
-			background: #ea0;
-		}
-
-		#op2.opt:hover {
-			background: #fa0;
-		}
-
-		#set table,
-		#set .legend,
-		#set #op2.opt,
-		#set.show #op1.opt {
-			display: none;
-		}
-
-		#set.show table {
-			display: table;
-		}
-
-		#set.show #op2.opt {
-			display: block;
-		}
-
-		.legend {
-			padding: 1.5em 0.5em;
-			border-bottom: 1px #eee solid;
-		}
+		.legend { padding: 1.5em 0.5em; border-bottom: 1px #eee solid; }
 
 		#res {
-			color: #789;
-			padding: 2em;
-			text-align: left;
+			color: #789; padding: 2em; text-align: left;
 			font-family: "Lucida Console", Monaco, monospace;
 		}
 
-		#res b {
-			font-weight: normal;
-		}
-
-		#res .obj {
-			color: #789;
-		}
-
-		#res .obj b {
-			color: #345;
-			font-weight: bold;
-		}
-
-		#res .key {
-			color: #45a;
-		}
-
-		#res .num {
-			color: #12a;
-		}
-
-		#res .txt {
-			color: #9ab;
-		}
-
-		#res .txt i {
-			color: #384;
-		}
-
-		#res .clr {
-			color: #9ab;
-		}
-
-		#res .clr i {
-			color: #731;
-		}
-
-		#res a {
-			color: #67a;
-		}
-
-		#res a:hover {
-			color: #67e;
-		}
+		#res b { font-weight: normal; }
+		#res .obj { color: #789; }
+		#res .obj b { color: #345; font-weight: bold; }
+		#res .key { color: #45a; }
+		#res .num { color: #12a; }
+		#res .txt { color: #9ab; }
+		#res .txt i { color: #384; }
+		#res .clr { color: #9ab; }
+		#res .clr i { color: #731; }
+		#res a { color: #67a; }
+		#res a:hover { color: #67e; }
 
 		@media (min-width: 620px) {
-			html,
-			body,
-			#box,
-			#set,
-			#txt,
-			#msg,
-			#hnt {
-				position: absolute;
-				top: 0;
-				right: 0;
-				left: 0;
-				bottom: 0;
-				display: block;
+			html, body, #box, #set, #txt, #msg, #hnt {
+				position: absolute; top: 0; right: 0; left: 0; bottom: 0; display: block;
 			}
-
-			html,
-			body {
-				overflow: hidden;
-			}
-
-			#box {
-				height: auto;
-			}
-
-			#txt,
-			#hnt {
-				height: 250px;
-				top: auto;
-				border-top: 3px #eee solid;
-			}
-
-			#set,
-			#hnt {
-				width: 270px;
-				left: auto;
-			}
-
-			#box,
-			#txt {
-				right: 270px;
-			}
-
-			#set,
-			#box {
-				bottom: 250px;
-			}
-
-			#set {
-				overflow-y: auto;
-			}
-
-			#set .legend,
-			#set table {
-				display: block;
-			}
-
-			#set .opt {
-				display: none !important;
-			}
+			html, body { overflow: hidden; }
+			#box { height: auto; }
+			#txt, #hnt { height: 250px; top: auto; border-top: 3px #eee solid; }
+			#set, #hnt { width: 270px; left: auto; }
+			#box, #txt { right: 270px; }
+			#set, #box { bottom: 250px; }
+			#set { overflow-y: auto; }
+			#set .legend, #set table { display: block; }
+			#set .opt { display: none !important; }
 		}
 
 		@media (min-width: 900px) {
-			#set,
-			#hnt {
-				width: 30%;
-			}
-
-			#box,
-			#txt {
-				right: 30%;
-			}
+			#set, #hnt { width: 30%; }
+			#box, #txt { right: 30%; }
 		}
 
 		@media (min-width: 1600px) {
-			#set,
-			#hnt {
-				width: 480px;
-			}
-
-			#box,
-			#txt {
-				right: 480px;
-			}
+			#set, #hnt { width: 480px; }
+			#box, #txt { right: 480px; }
 		}
 	</style>
 </head>
@@ -284,13 +143,12 @@
 <body>
 	<div id="box"></div>
 
+
 	<div id="set">
 		<a id="op1" class="opt" href="#">Show settings</a>
 		<a id="op2" class="opt" href="#">Hide settings</a>
 
-		<div class="legend">
-			<h3>QRCODE SETTINGS</h3>
-		</div>
+		<div class="legend"><h3>QRCODE SETTINGS</h3></div>
 
 		<table>
 			<tr><th><label for="in1">Dimension</label></th><td><input id="in1" type="number" value="256" min="256" max="61440" step="64" /></td></tr>
@@ -322,6 +180,10 @@
 			<tr><th><label for="in8">Background opaque</label></th><td><input id="in8" type="checkbox" /></td></tr>
 			<tr><th><label for="in9">Optimized SVG size</label></th><td><input id="in9" type="checkbox" checked /></td></tr>
 		</table>
+
+		<div class="download-buttons">
+			<button id="btnDownloadPng">Download PNG</button>
+		</div>
 	</div>
 
 	<div id="txt"><textarea id="msg"></textarea></div>
@@ -344,7 +206,8 @@
 				in6 = document.getElementById("in6"),
 				in7 = document.getElementById("in7"),
 				in8 = document.getElementById("in8"),
-				in9 = document.getElementById("in9");
+				in9 = document.getElementById("in9"),
+				btnDownloadPng = document.getElementById("btnDownloadPng");
 
 			const current = (o) => (o._value = o.value);
 			const updated = (o) => o._value === o.value;
@@ -421,24 +284,44 @@
 				return false;
 			};
 
+			// ✅ Convert QR (SVG) to PNG
+			const downloadPNG = () => {
+				const svg = box.querySelector("svg");
+				if (!svg) return;
+
+				const xml = new XMLSerializer().serializeToString(svg);
+				const svg64 = btoa(unescape(encodeURIComponent(xml)));
+				const image64 = "data:image/svg+xml;base64," + svg64;
+
+				const img = new Image();
+				img.onload = function () {
+					const canvas = document.createElement("canvas");
+					const size = +in1.value || 256;
+					canvas.width = size;
+					canvas.height = size;
+
+					const ctx = canvas.getContext("2d");
+					ctx.fillStyle = in7.value || "#fff";
+					ctx.fillRect(0, 0, canvas.width, canvas.height);
+					ctx.drawImage(img, 0, 0, size, size);
+
+					const link = document.createElement("a");
+					link.download = "qrcode-" + new Date().toISOString().replace(/[:\-T]/g, "").slice(0, 14) + ".png";
+					link.href = canvas.toDataURL("image/png");
+					link.click();
+				};
+				img.src = image64;
+			};
+
+			btnDownloadPng.onclick = downloadPNG;
+
 			op1.onclick = () => (set.className = "show", false);
 			op2.onclick = () => (set.className = "hide", false);
 
-			[in1, in2, in3, in4, in5, in6, in8, in9].forEach((el) => {
-				el.onchange = () => box.update();
-			});
+			[in1, in2, in3, in4, in5, in6, in8, in9].forEach((el) => el.onchange = () => box.update());
+			in7.onchange = () => { in8.checked = true; box.update(); };
 
-			in7.onchange = () => {
-				in8.checked = true;
-				box.update();
-			};
-
-			txt.onkeyup = () => {
-				if (!updated(txt)) {
-					box.update();
-					current(txt);
-				}
-			};
+			txt.onkeyup = () => { if (!updated(txt)) { box.update(); current(txt); } };
 
 			box.update = () => {
 				clear(box);
@@ -478,4 +361,5 @@
 		})();
 	</script>
 </body>
+
 </html>
